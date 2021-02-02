@@ -18,7 +18,6 @@ describe('HeroesComponent', () => {
     component = new HeroesComponent(mockHeroService);
   })
 
-
   describe('delete', () => {
 
     it('should remove the indicated hero form heroes list', () => {
@@ -30,8 +29,19 @@ describe('HeroesComponent', () => {
         component.delete(HEROES[2])
 
         //act and assert
-        expect(component.heroes.length).toBe(2);
+        expect(component.heroes.length).toBe(2); //checking of the component state has changed
+    })
+
+    it('should call deleteHero', () => {
+        mockHeroService.deleteHero.and.returnValue(of(true));
+        //this code is necessary because deleteHero return a promise
+        //this.heroService.deleteHero(hero).subscribe();
+
+        component.heroes = HEROES;
+        component.delete(HEROES[2])
+
+        //act and assert
+        expect(mockHeroService.deleteHero).toHaveBeenCalled();
     })
   })
-
 })
