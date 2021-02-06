@@ -22,7 +22,7 @@ describe('HeroesComponent', () => {
 
     it('should remove the indicated hero form heroes list', () => {
         mockHeroService.deleteHero.and.returnValue(of(true));
-        //this code is necessary because deleteHero return a promise
+        //this mock code is necessary because deleteHero return a promise
         //this.heroService.deleteHero(hero).subscribe();
 
         component.heroes = HEROES;
@@ -40,8 +40,10 @@ describe('HeroesComponent', () => {
         component.heroes = HEROES;
         component.delete(HEROES[2])
 
-        //act and assert
+        //check if method was called 
         expect(mockHeroService.deleteHero).toHaveBeenCalled();
+      //check if method was called with parameters
+        expect(mockHeroService.deleteHero).toHaveBeenCalledWith(HEROES[2]);
     })
   })
 })
