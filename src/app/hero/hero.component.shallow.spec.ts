@@ -1,3 +1,4 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HeroComponent } from './hero.component';
 
@@ -5,8 +6,10 @@ describe('HeroComponent (Shallow tests)', () => {
   let fixture: ComponentFixture<HeroComponent>;
 
   beforeEach(() => {
+    //lib to configure the test
     TestBed.configureTestingModule({
       declarations: [HeroComponent],
+      schemas: [NO_ERRORS_SCHEMA] //this attribute says to angular ignore unkonw element in your HTML template
     });
     fixture = TestBed.createComponent(HeroComponent);
   });
