@@ -15,10 +15,16 @@ describe('HeroComponent (Shallow tests)', () => {
   });
 
   it('should have the correct heroes ', () => {
-
     fixture.componentInstance.hero = { id: 1, name: 'SuperDude', strength: 3 };
-    expect(fixture.componentInstance.hero.name).toEqual ('SuperDude');
 
+    expect(fixture.componentInstance.hero.name).toEqual ('SuperDude');
+  });
+
+  it('should render the hero name in anchor tag ', () => {
+    fixture.componentInstance.hero = { id: 1, name: 'SuperDude', strength: 3 };
+    fixture.detectChanges();//reponsible for detected binding changes. Ex.: {{hero.name}}
+
+    expect(fixture.nativeElement.querySelector('a').textContent).toContain('SuperDude');
   });
 
 });
