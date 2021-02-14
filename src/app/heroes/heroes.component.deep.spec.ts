@@ -4,21 +4,13 @@ import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { Hero } from '../hero';
 import { HeroService } from '../hero.service';
+import { HeroComponent } from '../hero/hero.component';
 import { HeroesComponent } from './heroes.component';
 
-describe('HeroesComponent (Shallow tests)', () => {
+describe('HeroesComponent (deep tests)', () => {
   let fixture: ComponentFixture<HeroesComponent>; //call component
   let HEROES;
   let mockHeroService;
-
-  @Component({
-    selector: 'app-hero',
-    template: '<div></div>'
-  })
-  class FakeHeroComponent {
-    @Input() hero: Hero;
-
-  }
 
   beforeEach(() => {
     HEROES = [
@@ -32,29 +24,20 @@ describe('HeroesComponent (Shallow tests)', () => {
     TestBed.configureTestingModule({
       declarations: [
         HeroesComponent,
-        FakeHeroComponent
+        HeroComponent
       ],
       providers: [
         { provide: HeroService, useValue: mockHeroService } //mock service
-      ]
-      // ,schemas: [NO_ERRORS_SCHEMA] 
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     });
 
     fixture = TestBed.createComponent(HeroesComponent);
+    mockHeroService.getHeroes.and.returnValue(of(HEROES)); //called on Onit
+    fixture.detectChanges(); //it will be applied to heroes component and hero componentn(child)
   });
 
-  it('should set heroes correctly from service ', () => {
-    mockHeroService.getHeroes.and.returnValue(of(HEROES)); //mock service
-    fixture.detectChanges(); //call component
-
-    expect(fixture.componentInstance.heroes.length).toBe(3); //call component
+  it('should expect true to be true ', () => {
+    expect(true).toBe(true); 
   });
-
-  it('should create one li to each hero ', () => {
-    mockHeroService.getHeroes.and.returnValue(of(HEROES)); //mock service
-    fixture.detectChanges(); //call component
-
-    expect(fixture.debugElement.queryAll(By.css("li")).length).toBe(3); //call template
-  });
-
 });
