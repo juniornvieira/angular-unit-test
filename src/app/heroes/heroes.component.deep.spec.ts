@@ -33,11 +33,20 @@ describe('HeroesComponent (deep tests)', () => {
     });
 
     fixture = TestBed.createComponent(HeroesComponent);
-    mockHeroService.getHeroes.and.returnValue(of(HEROES)); //called on Onit
-    fixture.detectChanges(); //it will be applied to heroes component and hero componentn(child)
+    
   });
 
-  it('should expect true to be true ', () => {
-    expect(true).toBe(true); 
+  it('should render each hero as a HeroComponent', () => {
+    mockHeroService.getHeroes.and.returnValue(of(HEROES)); //called on Onit
+
+    fixture.detectChanges(); //run ngOnIt - which will trigger Onit - be applied to heroes component and hero componentn(child)
+
+    // fetch all elements of <app-hero or HeroComponent. same thing
+    const heroComponentDEs = fixture.debugElement.queryAll(By.directive(HeroComponent)) 
+    expect(heroComponentDEs.length).toBe(3);
+    for (let i = 0; i < heroComponentDEs.length; i++){
+      expect(heroComponentDEs[i].componentInstance.hero).toBe(HEROES[i]);
+    }
+
   });
 });
